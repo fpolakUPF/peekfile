@@ -1,3 +1,3 @@
-head -n 3 $1
+head -n $2 $1
 echo ...
-Tail -n 3 $1
+Tail -n $2 $1
