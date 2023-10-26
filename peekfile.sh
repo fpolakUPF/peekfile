@@ -1,0 +1,3 @@
+head -n 3 $1
+echo ...
+Tail -n 3 $1
