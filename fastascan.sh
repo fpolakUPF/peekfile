@@ -1,10 +1,10 @@
 #!/bin/zsh
-FOLDER=$1
+X=$1
 N=$2
 
-# Check if the FOLDER argument was passed
-if [[ -z "$FOLDER" ]]; then
-    FOLDER="./"
+# Check if the X argument was passed
+if [[ -z "$X" ]]; then
+    X="./"
 fi 
 
 # Check if the N argument was passed
@@ -13,10 +13,10 @@ if [[ -z "$N" ]]; then
 fi
 
 # Create a list of all fasta files in current folder and subfolders
-fasta_files=$(find . "$FOLDER" -type f -name "*.fasta" -or -type f -name "*fa")
+fasta_files=$(find . "$X" -type f -name "*.fasta" -or -type f -name "*fa")
 
 # Exit script if no fasta files are found in the provided folder
-if [[ $(find . "$FOLDER" -type f -name "*.fasta" -or -type f -name "*fa" | wc -l) -lt 1 ]]; then
+if [[ $(find . "$X" -type f -name "*.fasta" -or -type f -name "*fa" | wc -l) -lt 1 ]]; then
     echo "No fasta files found"
     exit
 fi
