@@ -2,13 +2,11 @@
 FOLDER=$1
 N=$2
 
-if [[ -z $FOLDER ]]
-then
+if [[ -z "$FOLDER" ]]; then
     FOLDER="./"
 fi 
 
-if [[ -z $N ]]
-then
+if [[ -z "$N" ]]; then
     N=0
 fi
 
@@ -16,11 +14,7 @@ fasta_files=$(find . "$FOLDER" -type f -name "*.fasta" -or -type f -name "*fa")
 unique_ids=""
 
 echo "\n----FASTAscan Report----"
-if [[ $FOLDER == "./" ]]; then
-    echo "Folder selected:\t\t" $(pwd)
-else
-    echo "Folder selected:\t\t" $FOLDER
-fi
+
 echo "Number of files:\t\t" $(echo $fasta_files | wc -l)
 
 for file in $(echo $fasta_files); do
@@ -38,11 +32,17 @@ for file in $(echo $fasta_files); do
 		echo "(NOT A SYMBOLIC LINK)"
 	fi
 
+    if [[ $(grep -v ">" $file | grep "[DEFHIKLMPQRSVWY]" | wc -l) -gt 0 ]]; then
+        echo "File contains amino acid sequences"
+    else
+        echo "File contains nucleotide sequences"
+    fi
+
     echo "Number of sequences:\t" $(grep ">" $file | wc -l)
     seqs_length=0
     while read -r line; do
         if [[ $line != ">*" ]]; then
-            seqs_length=$(( $seqs_length + $(echo $line | awk '{ gsub(/[^A-Za-z]/, ""); print }' | wc -c) ))
+            seqs_length=$(( $seqs_length + $(echo $line | awk '{ gsub(/[^A-Z]/, ""); print }' | wc -c) ))
         fi
     done < "$file"
     echo "Total sequence length:\t" $seqs_length
@@ -56,6 +56,8 @@ for file in $(echo $fasta_files); do
             tail -n $N $file
             echo "\n"
         fi
+    else
+        echo "\n"
     fi
 done
 
