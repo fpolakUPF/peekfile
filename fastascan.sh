@@ -9,7 +9,7 @@ fi
 
 if [[ -z $N ]]
 then
-    N=3
+    N=0
 fi
 
 fasta_files=$(find . "$FOLDER" -type f -name "*.fasta" -or -type f -name "*fa")
