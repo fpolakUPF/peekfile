@@ -13,8 +13,12 @@ fi
 fasta_files=$(find . "$FOLDER" -type f -name "*.fasta" -or -type f -name "*fa")
 unique_ids=""
 
-echo "\n----FASTAscan Report----"
+if [[ $(find . "$FOLDER" -type f -name "*.fasta" -or -type f -name "*fa" | wc -l) -lt 1 ]]; then
+    echo "No fasta files found"
+    exit
+fi
 
+echo "\n----FASTAscan Report----"
 echo "Number of files:\t\t" $(echo $fasta_files | wc -l)
 
 for file in $(echo $fasta_files); do
